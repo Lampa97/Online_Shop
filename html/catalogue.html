@@ -4,24 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../css/bootstrap.min.css" rel="stylesheet"/>
-    <title>Catalogue</title>
+    <title>Main</title>
 </head>
 <body>
     <div class="row">
-        <div class="col-2">
+        <div class="col-2 text-bg-dark">
+            <div class="header border-bottom">
+                <div class="row">
+                <div class="col-2">
+                <img src="../images/bootstrap.svg" class="img-thumbnail" alt="main">
+                    </div>
+                <div class="col-10">
+                    <h4>Меню</h4>
+                    </div>
+                </div>
+            </div>
             <table class="table table-dark table-hover table-borderless">
-                <thead>
-                <tr>
-                  <th scope="col"><img src="../images/book_double.svg" class="img-thumbnail" alt="main"></th>
-                  <th scope="col">
-                      <h3>Меню</h3>
-                  </th>
-                </tr>
-              </thead>
               <tbody>
                 <tr>
                   <th scope="row">
-                    <img src="../images/buildings.svg" class="img-thumbnail" alt="main">
+                    <img src="../images/house-door.svg" class="img-thumbnail" alt="main">
                   </th>
                   <td>
                     <a href="#"  class="link-offset-2 link-underline link-underline-opacity-0 link-light">Главная</a>
@@ -52,20 +54,25 @@
                     </td>
                 </tr>
               </tbody>
-                <tfoot>
-                <tr>
-                  <th scope="row"><img src="../images/person-circle.svg" class="img-thumbnail" alt="user"></th>
-                  <td colspan="2">
-                     <div class="dropup-center dropup">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Пользователь
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Профиль</a></li>
-                        <li><a class="dropdown-item" href="#">Выход</a></li>
-                      </ul>
-                    </div>
             </table>
+                <div class="footer border-top" style="margin-top: 200%">
+                    <div class="row">
+                    <div class="col-2">
+                    <img src="../images/person-circle.svg" class="img-thumbnail" alt="user">
+                    </div>
+                    <div class="col-10">
+                        <div class="dropup-center dropup">
+                              <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Пользователь
+                              </button>
+                              <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Профиль</a></li>
+                                <li><a class="dropdown-item" href="#">Выход</a></li>
+                              </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="col-10">
