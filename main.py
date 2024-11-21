@@ -10,7 +10,7 @@ class MyServer(BaseHTTPRequestHandler):
     обработку входящих запросов от клиентов
     """
 
-    def do_GET(self):
+    def do_get(self):
         """ Метод для обработки входящих GET-запросов """
         try:
             with open("html/contacts.html", "r", encoding="utf-8") as file:
