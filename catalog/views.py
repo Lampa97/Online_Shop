@@ -13,5 +13,6 @@ def contacts(request):
         Мы перезвоним вам по телефону: {phone}""")
     return render(request, 'catalog/contacts.html')
 
+
 def home(request):
     return render(request, 'catalog/home.html')
