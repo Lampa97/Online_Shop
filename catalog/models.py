@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название', help_text='Введите название категории')
+    name = models.CharField(max_length=100, verbose_name='Название', help_text='Введите название категории', unique=True)
     description = models.TextField(verbose_name='Описание')
 
     def __str__(self):
@@ -14,6 +14,7 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
         ordering = ['name']
 
+
 class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название', help_text='Введите название продукта')
     description = models.TextField(verbose_name='Описание')
@@ -22,7 +23,6 @@ class Product(models.Model):
     price = models.FloatField(verbose_name='Цена')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
-
 
     def __str__(self):
         return self.name
