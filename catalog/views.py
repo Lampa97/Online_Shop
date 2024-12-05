@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Product
+from .models import Product, Contact
 
 # Create your views here.
 
 def contacts(request):
+    all_contacts = Contact.objects.all()
+
     if request.method == "POST":
         name = request.POST.get('name')
         phone = request.POST.get('phone')
@@ -13,7 +15,9 @@ def contacts(request):
         return HttpResponse(f"""Спасибо, {name}! 
         Мы получили ваше сообщение: ({message}).
         Мы перезвоним вам по телефону: {phone}""")
-    return render(request, 'catalog/contacts.html')
+    return render(request, 'catalog/contacts.html',
+                  {'contacts': all_contacts}
+                  )
 
 
 def home(request):
