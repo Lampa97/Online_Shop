@@ -1,0 +1,106 @@
+[
+{
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+        "name": "Дрель",
+        "description": "Сверлит абсолютно всё",
+        "image": "",
+        "category": 3,
+        "price": 99.99,
+        "created_at": "2024-12-05T01:17:56.203Z",
+        "updated_at": "2024-12-05T01:17:56.203Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+        "name": "Отвертка",
+        "description": "Вкрутит любой шуруп",
+        "image": "",
+        "category": 3,
+        "price": 89.95,
+        "created_at": "2024-12-05T01:18:16.817Z",
+        "updated_at": "2024-12-05T01:18:16.817Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+        "name": "Бензопила",
+        "description": "Этой бензопилой мы пилим дрова для нашей мебели",
+        "image": "",
+        "category": 3,
+        "price": 100.0,
+        "created_at": "2024-12-05T01:18:33.873Z",
+        "updated_at": "2024-12-05T01:18:33.873Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+        "name": "Шуба",
+        "description": "Для холодных зим",
+        "image": "",
+        "category": 2,
+        "price": 1000.0,
+        "created_at": "2024-12-05T01:19:02.059Z",
+        "updated_at": "2024-12-05T01:19:02.059Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+        "name": "Шапка-ушанка",
+        "description": "Идет в комплекте с балалайкой",
+        "image": "",
+        "category": 2,
+        "price": 199.99,
+        "created_at": "2024-12-05T01:19:18.271Z",
+        "updated_at": "2024-12-05T01:19:18.271Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+        "name": "Шкаф",
+        "description": "Для хранения вашей одежды",
+        "image": "",
+        "category": 4,
+        "price": 2000.0,
+        "created_at": "2024-12-05T01:20:23.208Z",
+        "updated_at": "2024-12-05T01:20:23.208Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 8,
+    "fields": {
+        "name": "Ящик",
+        "description": "Для хранения ваших инструментов",
+        "image": "",
+        "category": 4,
+        "price": 899.99,
+        "created_at": "2024-12-05T01:20:41.437Z",
+        "updated_at": "2024-12-05T01:20:41.437Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 9,
+    "fields": {
+        "name": "Полка",
+        "description": "Если не хватило места для одежды или инструментов",
+        "image": "",
+        "category": 4,
+        "price": 599.99,
+        "created_at": "2024-12-05T01:20:57.006Z",
+        "updated_at": "2024-12-05T01:20:57.006Z"
+    }
+}
+]
