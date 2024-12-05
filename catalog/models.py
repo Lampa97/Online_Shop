@@ -1,6 +1,4 @@
 from django.db import models
-from mypy.main import maybe_write_junit_xml
-
 
 # Create your models here.
 
