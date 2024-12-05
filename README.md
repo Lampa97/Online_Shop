@@ -15,6 +15,36 @@
 
 1. localhost:8000/catalog/home/
 2. localhost:8000/catalog/contacts/
+3. localhost:8000/admin/
+
+### База данных
+Проект использует базу данных PostgreSQL. Для создания базы данных и применения миграций используйте следующие команды:
+
+```
+python manage.py makemigrations
+```
+
+```
+python manage.py migrate
+```
+
+### Модели
+Созданы и зарегистрированы модели ***Category***, ***Product***, ***Contact*** в приложении **catalog**.
+
+### Переменные окружения
+
+Для работы с базой данных необходимо создать файл ***.env*** в корневой директории проекта и добавить следующие переменные:
+
+**SECRET_KEY= ключ из settings.py**
+
+**DEBUG= True либо False**
+
+**DATABASE_NAME = Имя данное созданной базе данных**
+**DATABASE_USER = Имя пользователя базы данных**
+**DATABASE_PASSWORD = Пароль от базы данных**
+**DATABASE_HOST = Имя хоста**
+**DATABASE_PORT = Номер порта базы данных**
+
 
 
 ### Структура проекта:
