@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from .models import Contact, Product
+from .models import Contact, Product, Category
 
 
 def contacts(request):
@@ -30,3 +30,27 @@ def home(request):
 def single_product(request, pk):
     product = Product.objects.get(id=pk)
     return render(request, "catalog/single_product.html", {"product": product})
+
+
+def add_product(request):
+    categories = Category.objects.all()
+
+    if request.method == "POST":
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+        price = request.POST.get("price")
+        category_name = request.POST.get("category")
+        image = request.FILES.get("image")
+
+        category = Category.objects.get(name=category_name)
+
+        print(image)
+
+        Product.objects.create(
+            name=name, description=description, price=price, category_id=category.pk, image=image
+        )
+
+        return HttpResponse("Продукт успешно добавлен")
+
+
+    return render(request, "catalog/add_product.html", {"categories": categories})
