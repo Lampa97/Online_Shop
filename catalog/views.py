@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.core.paginator import Paginator
 
 from .models import Contact, Product, Category
 
@@ -20,11 +21,14 @@ def contacts(request):
 
 
 def home(request):
-    last_5_products = Product.objects.all().order_by("-created_at")[:5]
-    print(last_5_products)
     all_products = Product.objects.all()
-    context = {"products": all_products}
-    return render(request, "catalog/home.html", context=context)
+    paginator = Paginator(all_products, 4)  # Show 4 products per page
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {'page_obj': page_obj}
+    return render(request, 'catalog/home.html', context)
 
 
 def single_product(request, pk):
