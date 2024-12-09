@@ -1,9 +1,9 @@
 {% extends "catalog/base.html" %}
 
-{% block title %}Product{% endblock %}
+{% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
-{% include "catalog/includes/upper_menu.html" %}
+{% include "catalog/includes/header.html" %}
 
 <div class="container">
     <div class="row text-center">
