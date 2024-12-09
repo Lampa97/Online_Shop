@@ -25,3 +25,8 @@ def home(request):
     all_products = Product.objects.all()
     context = {"products": all_products}
     return render(request, "catalog/home.html", context=context)
+
+
+def single_product(request, pk):
+    product = Product.objects.get(id=pk)
+    return render(request, "catalog/single_product.html", {"product": product})
