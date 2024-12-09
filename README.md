@@ -10,12 +10,14 @@
 
 1. ***home***
 2. ***contacts***
+3. ***products***
 
 ### Подключенные маршруты
 
 1. localhost:8000/catalog/home/
 2. localhost:8000/catalog/contacts/
-3. localhost:8000/admin/
+3. localhost:8000/catalog/products/
+4. localhost:8000/admin/
 
 ### База данных
 Проект использует базу данных PostgreSQL. Для создания базы данных и применения миграций используйте следующие команды:
@@ -30,6 +32,12 @@ python manage.py migrate
 
 ### Модели
 Созданы и зарегистрированы модели ***Category***, ***Product***, ***Contact*** в приложении **catalog**.
+
+Созданы фикстуры для заполнения базы данных тестовыми данными. Для добавления данных в базу данных используйте следующую команду:
+
+```
+python manage.py add_products
+```
 
 ### Переменные окружения
 
