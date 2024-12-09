@@ -22,4 +22,6 @@ def contacts(request):
 def home(request):
     last_5_products = Product.objects.all().order_by("-created_at")[:5]
     print(last_5_products)
-    return render(request, "catalog/home.html")
+    all_products = Product.objects.all()
+    context = {"products": all_products}
+    return render(request, "catalog/home.html", context=context)
