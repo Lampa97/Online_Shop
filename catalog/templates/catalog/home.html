@@ -18,7 +18,9 @@
             {% for product in products %}
               <div class="col">
                 <div class="card mb-4 box-shadow">
-                    <img src="..." class="card-img-top" alt="{{ product.name }}">
+                    <a href="{% url "single_product" product.pk %}">
+                    <img src="{{ product.image.url }}" class="card-img-top img-fluid" alt="{{ product.name }}">
+                    </a>
                     <div class="card-header">
                         <h4 class="my-0 font-weight-normal"><a href="{% url "single_product" product.pk %}" class="link-underline-light">{{ product.name }}</a></h4>
                     </div>
