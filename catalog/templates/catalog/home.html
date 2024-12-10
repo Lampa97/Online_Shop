@@ -1,5 +1,5 @@
 {% extends "catalog/base.html" %}
-
+{% load static %}
 
 {% block title %}Skystore{% endblock %}
 
@@ -18,7 +18,11 @@
               <div class="col">
                 <div class="card mb-4 box-shadow">
                     <a href="{% url "single_product" product.pk %}">
+                    {% if product.image %}
                     <img src="{{ product.image.url }}" alt="{{ product.name }}" class="card-img-top img-fluid" >
+                    {% else %}
+                    <img src="{% static "placeholder.png"%}" alt="{{ product.name }}" class="card-img-top img-fluid" >
+                    {% endif %}
                     </a>
                     <div class="card-header">
                         <h4 class="my-0 font-weight-normal"><a href="{% url "single_product" product.pk %}" class="link-underline-light">{{ product.name }}</a></h4>
