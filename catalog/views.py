@@ -1,8 +1,8 @@
+from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.core.paginator import Paginator
 
-from .models import Contact, Product, Category
+from .models import Category, Contact, Product
 
 
 def contacts(request):
@@ -24,11 +24,11 @@ def home(request):
     all_products = Product.objects.all()
     paginator = Paginator(all_products, 4)  # Show 4 products per page
 
-    page_number = request.GET.get('page')
+    page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    context = {'page_obj': page_obj}
-    return render(request, 'catalog/home.html', context)
+    context = {"page_obj": page_obj}
+    return render(request, "catalog/home.html", context)
 
 
 def single_product(request, pk):
@@ -50,11 +50,8 @@ def add_product(request):
 
         print(image)
 
-        Product.objects.create(
-            name=name, description=description, price=price, category_id=category.pk, image=image
-        )
+        Product.objects.create(name=name, description=description, price=price, category_id=category.pk, image=image)
 
         return HttpResponse("Продукт успешно добавлен")
-
 
     return render(request, "catalog/add_product.html", {"categories": categories})
