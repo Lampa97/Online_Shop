@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 from .models import Category, Contact, Product
 
+ALL_CATEGORIES = Category.objects.all()
 
 def contacts(request):
     all_contacts = Contact.objects.all()
@@ -17,7 +18,10 @@ def contacts(request):
         Мы получили ваше сообщение: ({message}).
         Мы перезвоним вам по телефону: {phone}"""
         )
-    return render(request, "catalog/contacts.html", {"contacts": all_contacts})
+
+    context = {"categories": ALL_CATEGORIES, "contacts": all_contacts}
+
+    return render(request, "catalog/contacts.html", context)
 
 
 def home(request):
@@ -27,13 +31,16 @@ def home(request):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    context = {"page_obj": page_obj}
+    context = {"page_obj": page_obj, "categories": ALL_CATEGORIES}
     return render(request, "catalog/home.html", context)
 
 
 def single_product(request, pk):
     product = Product.objects.get(id=pk)
-    return render(request, "catalog/single_product.html", {"product": product})
+
+    context = {"categories": ALL_CATEGORIES, "product": product }
+
+    return render(request, "catalog/single_product.html", context)
 
 
 def add_product(request):
