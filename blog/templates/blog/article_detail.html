@@ -17,8 +17,12 @@
           </div>
           <div class="card-body text-center" >
                 <p>{{ article.content }}</p>
-              <button type="button" class="btn btn-lg btn-block btn-outline-secondary">Редактировать</button>
-              <button type="button" class="btn btn-lg btn-block btn-outline-danger">Удалить</button>
+              <a href="{% url 'article_update' article.pk %}">
+                  <button type="button" class="btn btn-lg btn-block btn-outline-secondary">Редактировать</button>
+              </a>
+              <a href="{% url 'article_delete' article.pk %}">
+                  <button type="button" class="btn btn-lg btn-block btn-outline-danger">Удалить</button>
+              </a>
           </div>
           <div class="card-footer text-body-secondary">
               Количество просмотров: {{article.views_counter}}

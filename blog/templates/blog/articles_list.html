@@ -16,25 +16,27 @@
     <div class="row text-center">
         <div class="row row-cols-2 row-cols-md-4 g-4">
             {% for article in articles %}
+            {% if article.is_published %}
               <div class="col">
                 <div class="card mb-4 box-shadow">
-                    <a href="{% url "article_detail" article.pk %}">
+                    <a href="{% url 'article_detail' article.pk %}">
                     {% if article.preview %}
                     <img src="{{ article.preview | media_filter }}" alt="{{ article.title }}" class="card-img-top img-fluid" >
                     {% else %}
-                    <img src="{% static "placeholder.png"%}" alt="{{ article.title }}" class="card-img-top img-fluid" >
+                    <img src="{% static 'placeholder.png'%}" alt="{{ article.title }}" class="card-img-top img-fluid" >
                     {% endif %}
                     </a>
                     <div class="card-header">
-                        <h4 class="my-0 font-weight-normal"><a href="{% url "article_detail" article.pk %}" class="link-underline-light">{{ article.title }}</a></h4>
+                        <h4 class="my-0 font-weight-normal"><a href="{% url 'article_detail' article.pk %}" class="link-underline-light">{{ article.title }}</a></h4>
                     </div>
                     <div class="card-body">
                         <ul class="list-unstyled mt-3 mb-4 text-start m-6">
-                            <li><b>Содержимое:</b>{{ article.content|truncatechars:100 }}</li>
+                            <li><b>Содержание: </b>{{ article.content|truncatechars:100 }}</li>
                         </ul>
-                        <a href="{% url "article_detail" article.pk %}">
-                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Читать</button>
+                        <a href="{% url 'article_detail' article.pk %}">
+                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Открыть</button>
                         </a>
+                        {% endif %}
                     </div>
                 </div>
 

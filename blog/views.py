@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator
 from .models import Article
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 
 class ArticleListView(ListView):
@@ -11,9 +11,12 @@ class ArticleListView(ListView):
     template_name = "blog/articles_list.html"
     context_object_name = "articles"
 
+    def get_queryset(self):
+        return Article.objects.filter(is_published=True)
+
     def get(self, request):
-        all_articles = Article.objects.all()
-        paginator = Paginator(all_articles, 4)  # Show 4 products per page
+        queryset = self.get_queryset()
+        paginator = Paginator(queryset, 4)  # Show 4 products per page
 
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
@@ -39,9 +42,22 @@ class ArticleDetailView(DetailView):
     template_name = "blog/article_detail.html"
     context_object_name = "article"
 
-    def get(self, request, pk):
-        article = Article.objects.get(pk=pk)
+    def get_object(self, queryset=None):
+        article = super().get_object(queryset)
         article.views_counter += 1
         article.save()
-        context = {"article": article}
-        return render(request, "blog/article_detail.html", context)
+        return article
+
+
+class ArticleUpdateView(UpdateView):
+    model = Article
+    template_name = "blog/article_update.html"
+    fields = ["title", "content", "preview", "is_published"]
+
+    def get_success_url(self):
+        return reverse_lazy("article_detail", kwargs={"pk": self.object.pk})
+
+class ArticleDeleteView(DeleteView):
+    model = Article
+    template_name = "blog/article_confirm_delete.html"
+    success_url = reverse_lazy("articles_list")
