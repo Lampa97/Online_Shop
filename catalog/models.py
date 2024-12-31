@@ -20,7 +20,10 @@ class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название", help_text="Введите название продукта")
     description = models.TextField(verbose_name="Описание")
     image = models.ImageField(
-        upload_to="products", blank=True, null=True, verbose_name="Изображение",
+        upload_to="products",
+        blank=True,
+        null=True,
+        verbose_name="Изображение",
     )
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Категория")
     price = models.FloatField(verbose_name="Цена")

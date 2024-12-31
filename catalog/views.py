@@ -2,7 +2,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView, TemplateView, UpdateView, DeleteView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
 
 from .forms import ProductForm
 from .models import Category, Contact, Product
@@ -13,7 +13,6 @@ ALL_CATEGORIES = Category.objects.all()
 class ContactsView(TemplateView):
     model = Contact
     template_name = "catalog/contacts.html"
-
 
     def get(self, request):
         all_contacts = Contact.objects.all()
