@@ -2,9 +2,8 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
+from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
-from .forms import ProductForm
 from .models import Category, Contact, Product
 
 ALL_CATEGORIES = Category.objects.all()
@@ -13,6 +12,7 @@ ALL_CATEGORIES = Category.objects.all()
 class ContactsView(TemplateView):
     model = Contact
     template_name = "catalog/contacts.html"
+
 
     def get(self, request):
         all_contacts = Contact.objects.all()
@@ -55,22 +55,7 @@ class ProductDetailView(DetailView):
 
 class ProductCreateView(CreateView):
     model = Product
-    form_class = ProductForm
-    template_name = "catalog/product_form.html"
+    template_name = "catalog/add_product.html"
     context_object_name = "product"
-    success_url = reverse_lazy("home")
-
-
-class ProductUpdateView(UpdateView):
-    model = Product
-    form_class = ProductForm
-    template_name = "catalog/product_form.html"
-    context_object_name = "product"
-    success_url = reverse_lazy("home")
-
-
-class ProductDeleteView(DeleteView):
-    model = Product
-    context_object_name = "product"
-    template_name = "catalog/product_confirm_delete.html"
+    fields = ["name", "category", "price", "description", "image"]
     success_url = reverse_lazy("home")
