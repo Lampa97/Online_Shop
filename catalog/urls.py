@@ -9,6 +9,8 @@ from .views import (
     ProductUpdateView,
 )
 
+app_name = 'catalog'
+
 urlpatterns = [
     path("contacts/", ContactsView.as_view(), name="contacts"),
     path("home/", HomeListView.as_view(), name="home"),
