@@ -1,15 +1,9 @@
 from django.urls import path
 
-from .views import (
-    ContactsView,
-    HomeListView,
-    ProductCreateView,
-    ProductDeleteView,
-    ProductDetailView,
-    ProductUpdateView,
-)
+from .views import (ContactsView, HomeListView, ProductCreateView, ProductDeleteView, ProductDetailView,
+                    ProductUpdateView)
 
-app_name = 'catalog'
+app_name = "catalog"
 
 urlpatterns = [
     path("contacts/", ContactsView.as_view(), name="contacts"),

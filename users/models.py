@@ -1,6 +1,5 @@
-from django.db import models
-
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 
 class CustomUser(AbstractUser):
@@ -10,7 +9,7 @@ class CustomUser(AbstractUser):
     avatar = models.ImageField(upload_to="avatars", blank=True, null=True, verbose_name="Аватар")
     country = models.CharField(max_length=50, blank=True, null=True, verbose_name="Страна")
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     def __str__(self):
