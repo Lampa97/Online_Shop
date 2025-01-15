@@ -1,9 +1,10 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.paginator import Paginator
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
+from django.views.generic import View, CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
+from django.http import HttpResponseForbidden
 
 from .forms import ProductForm
 from .models import Category, Contact, Product
@@ -34,18 +35,45 @@ class ContactsView(TemplateView):
 
 class HomeListView(ListView):
     model = Product
-    template_name = "catalog/home.html"
     context_object_name = "products"
 
     def get(self, request):
-        all_products = Product.objects.all()
-        paginator = Paginator(all_products, 4)  # Show 4 products per page
+        published_products = Product.objects.filter(is_published=True)
+        paginator = Paginator(published_products, 4)  # Show 4 products per page
 
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
 
         context = {"products": page_obj, "categories": ALL_CATEGORIES}
         return render(request, "catalog/home.html", context)
+
+
+class UnpublishedProductsListView(ListView):
+    model = Product
+    context_object_name = "products"
+
+    def get(self, request):
+        unpublished_products = Product.objects.filter(is_published=False)
+        paginator = Paginator(unpublished_products, 4)  # Show 4 products per page
+
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+
+        context = {"products": page_obj, "categories": ALL_CATEGORIES}
+        return render(request, "catalog/home.html", context)
+
+
+class UnpublishProductView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        product = get_object_or_404(Product, id=pk)
+
+        if not request.user.has_perm('products.can_unpublish_product'):
+            return HttpResponseForbidden('У вас нет прав на снятие товара с публикации')
+
+        product.is_published = False if product.is_published else True
+        product.save()
+        return redirect("catalog:home")
+
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
@@ -59,7 +87,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     form_class = ProductForm
     template_name = "catalog/product_form.html"
     context_object_name = "product"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("catalog:home")
 
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
@@ -67,11 +95,12 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ProductForm
     template_name = "catalog/product_form.html"
     context_object_name = "product"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("catalog:home")
 
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    permission_required = 'products.delete_product'
     model = Product
     context_object_name = "product"
     template_name = "catalog/product_confirm_delete.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("catalog:home")
