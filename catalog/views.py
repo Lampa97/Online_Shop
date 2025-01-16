@@ -1,10 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.paginator import Paginator
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse, HttpResponseForbidden
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import View, CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
-from django.http import HttpResponseForbidden
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView, View
 
 from .forms import ProductForm
 from .models import Category, Contact, Product
@@ -67,13 +66,12 @@ class UnpublishProductView(LoginRequiredMixin, View):
     def post(self, request, pk):
         product = get_object_or_404(Product, id=pk)
 
-        if not request.user.has_perm('products.can_unpublish_product'):
-            return HttpResponseForbidden('У вас нет прав на снятие товара с публикации')
+        if not request.user.has_perm("products.can_unpublish_product"):
+            return HttpResponseForbidden("У вас нет прав на снятие товара с публикации")
 
         product.is_published = False if product.is_published else True
         product.save()
         return redirect("catalog:home")
-
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
@@ -109,10 +107,8 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         return HttpResponseForbidden("У вас нет прав доступа для редактирования продукта")
 
 
-
-
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
-    permission_required = 'products.delete_product'
+    permission_required = "products.delete_product"
     model = Product
     context_object_name = "product"
     template_name = "catalog/product_confirm_delete.html"
@@ -121,9 +117,8 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     def post(self, request, pk):
         product = get_object_or_404(Product, id=pk)
 
-        if not request.user.has_perm('delete_product') and not request.user == product.owner:
-            return HttpResponseForbidden('У вас нет прав на удаление продукта!')
+        if not request.user.has_perm("delete_product") and not request.user == product.owner:
+            return HttpResponseForbidden("У вас нет прав на удаление продукта!")
 
         product.delete()
-        return redirect('catalog:home')
-
+        return redirect("catalog:home")

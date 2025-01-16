@@ -61,6 +61,6 @@ class ProductForm(forms.ModelForm):
             if image.size > 5 * 1024 * 1024:
                 raise ValidationError("Размер изображения не должен превышать 5 Мб")
 
-            if hasattr(image.file, 'content_type') and image.file.content_type not in ["image/jpeg", "image/png"]:
+            if hasattr(image.file, "content_type") and image.file.content_type not in ["image/jpeg", "image/png"]:
                 raise ValidationError("Формат изображения должен быть JPEG или PNG")
         return image
