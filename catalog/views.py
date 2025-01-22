@@ -4,6 +4,11 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView, View
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+from django.core.cache import cache
+from .services import ProductService
+
 
 from .forms import ProductForm
 from .models import Category, Contact, Product
@@ -36,6 +41,13 @@ class HomeListView(ListView):
     model = Product
     context_object_name = "products"
 
+    def get_queryset(self):
+        queryset = cache.get('products') # Попытка получить данные из кэша
+        if not queryset:
+            queryset = super().get_queryset()
+            cache.set('products', queryset, 60*15) # Сохранение данных в кэш
+        return queryset
+
     def get(self, request):
         published_products = Product.objects.filter(is_published=True)
         paginator = Paginator(published_products, 4)  # Show 4 products per page
@@ -45,6 +57,18 @@ class HomeListView(ListView):
 
         context = {"products": page_obj, "categories": ALL_CATEGORIES}
         return render(request, "catalog/home.html", context)
+
+class CategoryDetailView(DetailView):
+    model = Category
+    context_object_name = "products"
+    template_name = "catalog/category.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_id = self.object.id
+        context['products'] = ProductService.get_products_in_category(category_id)
+        context["categories"] = ALL_CATEGORIES
+        return context
 
 
 class UnpublishedProductsListView(ListView):
@@ -73,11 +97,16 @@ class UnpublishProductView(LoginRequiredMixin, View):
         product.save()
         return redirect("catalog:home")
 
-
+@method_decorator(cache_page(60*15), name="dispatch")
 class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = "catalog/single_product.html"
     context_object_name = "product"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = ALL_CATEGORIES
+        return context
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
