@@ -12,7 +12,7 @@ from .forms import ProductForm
 from .models import Category, Contact, Product
 from .services import ProductService
 
-ALL_CATEGORIES = Category.objects.all()
+ALL_CATEGORIES = ProductService.get_all_categories()
 
 
 class ContactsView(TemplateView):
